@@ -1,20 +1,48 @@
-// 1. Всі дані з 'main.py' тепер зберігаються тут, в JavaScript
+// 1. All data is stored here in JavaScript
 const portfolioData = {
     profile: {
         "name": "Myhaylo Koltun",
         "title": "Python Developer",
-        "bio": "Computer Science student at National University 'Lviv Polytechnic' with strong passion for Python development and web technologies.",
+        "bio": "Computer Science student at National University 'Lviv Polytechnic' with a strong passion for Python development and web technologies.",
         "location": "Lviv, Ukraine"
     },
+    experience: [
+        {
+            "company": "EPAM Systems",
+            "role": "EPAM Laboratory",
+            "period": "April - Present",
+            "description": "Practical development and work on real-world projects within the laboratory environment."
+        },
+        {
+            "company": "EPAM Systems",
+            "role": "Internship",
+            "period": "February - April",
+            "description": "Intensive internship focusing on modern software development practices and methodologies."
+        },
+        {
+            "company": "Kredobank",
+            "role": "Monitoring Department",
+            "period": "Practical Experience",
+            "description": "Educational practice, familiarization with the monitoring processes of banking IT systems."
+        },
+        {
+            "company": "Tsukat",
+            "role": "Game Tester",
+            "period": "Commercial Experience",
+            "description": "VR IT company where I tested games to ensure their quality, performance, and stability."
+        }
+    ],
     hard_skills: [
         {"name": "Python", "level": "Intermediate", "experience": "1+ year"},
         {"name": "Django", "level": "Beginner-Intermediate", "experience": "6 months"},
+        {"name": "FastAPI", "level": "Beginner-Intermediate", "experience": "Learning / Practice"},
         {"name": "MySQL/SQL", "level": "Intermediate", "experience": "6 months"},
         {"name": "JavaScript", "level": "Beginner-Intermediate", "experience": "1 year"},
         {"name": "HTML/CSS", "level": "Intermediate", "experience": "1 year"},
-        {"name": "FastAPI", "level": "Beginner", "experience": "Learning"},
         {"name": "OOP & Design Patterns", "level": "Intermediate", "experience": "1 year"},
-        {"name": "Git/GitHub", "level": "Intermediate", "experience": "1+ year"}
+        {"name": "Git/GitHub", "level": "Intermediate", "experience": "6 months"},
+        {"name": "Docker", "level": "Beginner-Intermediate", "experience": "6 months"},
+        {"name": "AWS", "level": "Beginner-Intermediate", "experience": "6 months"}
     ],
     soft_skills: [
         "Effective Communication",
@@ -26,24 +54,24 @@ const portfolioData = {
     ],
     projects: [
         {
+            "title": "Restaurant Service",
+            "description": "Development of a restaurant service application. Worked as a Backend Developer to ensure robust business logic and data processing.",
+            "technologies": ["Python", "Next.js", "AWS"]
+        },
+        {
+            "title": "Streaming Service",
+            "description": "Client-server system designed for media content streaming.",
+            "technologies": ["FastAPI", "MySQL", "HTML", "CSS", "JavaScript"]
+        },
+        {
             "title": "AutoGalaxy: Rental Cars Website",
-            "description": "Full-stack Django application for car reservations with user authentication, profile management",
+            "description": "Full-stack Django application for car reservations with user authentication and profile management.",
             "technologies": ["Django", "Python", "MySQL", "HTML", "CSS", "JavaScript"]
         },
         {
-            "title": "Data Analysis Projects",
-            "description": "Academic projects focusing on Big Data concepts including data preprocessing, analysis, and visualization",
-            "technologies": ["Python", "Pandas", "NumPy", "Matplotlib", "Data Visualization"]
-        },
-        {
-            "title": "API Integration Projects",
-            "description": "Various projects implementing OOP principles, design patterns, file handling, and external API integration",
-            "technologies": ["Python", "OOP", "REST APIs", "JSON/CSV"]
-        },
-        {
             "title": "Personal Portfolio",
-            "description": "Modern portfolio website built with FastAPI backend and responsive frontend",
-            "technologies": ["FastAPI", "Python", "HTML", "CSS", "JavaScript"]
+            "description": "Modern portfolio website built with responsive frontend technologies.",
+            "technologies": ["Python", "HTML", "CSS", "JavaScript"]
         }
     ],
     contact: {
@@ -60,10 +88,9 @@ const portfolioData = {
     }
 };
 
-// 2. Функція 'loadPortfolio' тепер не 'async' і бере дані з локального об'єкта
+// 2. Load Portfolio Function
 function loadPortfolio() {
     try {
-        // Ми просто використовуємо локальний об'єкт 'portfolioData'
         const data = portfolioData;
 
         // Profile
@@ -75,17 +102,27 @@ function loadPortfolio() {
         const edu = data.education;
         document.getElementById('education').innerHTML = `
             <h3 style="margin-bottom: 10px;">${edu.institution}</h3>
-            <p><strong>Спеціальність:</strong> ${edu.specialization}</p>
-            <p><strong>Період:</strong> ${edu.period}</p>
-            <p><strong>Статус:</strong> ${edu.status}</p>
+            <p><strong>Specialization:</strong> ${edu.specialization}</p>
+            <p><strong>Period:</strong> ${edu.period}</p>
+            <p><strong>Status:</strong> ${edu.status}</p>
         `;
+
+        // Experience
+        const experienceHTML = data.experience.map(exp => `
+            <div class="project-card">
+                <div class="project-title">${exp.role} @ ${exp.company}</div>
+                <p style="color: #c9a961; margin-bottom: 10px;"><strong>📅 ${exp.period}</strong></p>
+                <p>${exp.description}</p>
+            </div>
+        `).join('');
+        document.getElementById('experience').innerHTML = experienceHTML;
 
         // Hard Skills
         const hardSkillsHTML = data.hard_skills.map(skill => `
             <div class="skill-card">
                 <div class="skill-name">${skill.name}</div>
-                <div><strong>Рівень:</strong> ${skill.level}</div>
-                <div><strong>Досвід:</strong> ${skill.experience}</div>
+                <div><strong>Level:</strong> ${skill.level}</div>
+                <div><strong>Experience:</strong> ${skill.experience}</div>
             </div>
         `).join('');
         document.getElementById('hard-skills').innerHTML = hardSkillsHTML;
@@ -113,7 +150,7 @@ function loadPortfolio() {
         // Contact
         const contactHTML = `
             <div class="contact-item">
-                <h3>📱 Телефон</h3>
+                <h3>📱 Phone</h3>
                 <a href="tel:${data.contact.phone}">${data.contact.phone}</a>
             </div>
             <div class="contact-item">
@@ -122,11 +159,11 @@ function loadPortfolio() {
             </div>
             <div class="contact-item">
                 <h3>💼 GitHub</h3>
-                <a href="${data.contact.github}" target="_blank">Переглянути профіль</a>
+                <a href="${data.contact.github}" target="_blank">View Profile</a>
             </div>
             <div class="contact-item">
                 <h3>🔗 LinkedIn</h3>
-                <a href="${data.contact.linkedin}" target="_blank">Переглянути профіль</a>
+                <a href="${data.contact.linkedin}" target="_blank">View Profile</a>
             </div>
         `;
         document.getElementById('contact').innerHTML = contactHTML;
@@ -137,10 +174,9 @@ function loadPortfolio() {
 
     } catch (error) {
         console.error('Error loading portfolio:', error);
-        document.getElementById('loading').textContent = 'Помилка завантаження. Спробуйте оновити сторінку.';
+        document.getElementById('loading').textContent = 'Error loading. Please try refreshing the page.';
     }
 }
 
-// 3. Викликаємо функцію. Оскільки скрипт завантажується в кінці <body>,
-// DOM на цей момент вже буде готовий.
+// 3. Initialize
 loadPortfolio();
